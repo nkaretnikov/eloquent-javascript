@@ -1,0 +1,19 @@
+<script>
+do {
+	var size = Number(prompt("Pick the board size", "8"));
+} while (isNaN(size) || !size);
+
+for (var line = 1; line <= size; line++) {
+	for (var character = 1; character <= size; character++) {
+		if (line % 2 == 0)
+			var x = "&nbsp", y = "#";
+		else
+			var x = "#", y = "&nbsp";
+		if (character % 2 == 0)
+			document.write(x);
+		else
+			document.write(y);
+	}
+	document.write("<br>");
+}
+</script>
