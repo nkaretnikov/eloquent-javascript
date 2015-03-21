@@ -1,0 +1,33 @@
+<script>
+function countBs(x) {
+	return countChar(x, "B");
+}
+
+function countChar(s,c) {
+	function go(index, count) {
+		if (index >= s.length)
+			return count;
+		else if (s.charAt(index) == c)
+			return go(index+1, count+1);
+		else
+			return go(index+1, count);
+	}
+	return go(0,0);
+}
+
+console.log(countBs(""));
+console.log(countBs("x"));
+console.log(countBs("b"));
+console.log(countBs("B"));
+console.log(countBs("lalaBfdsBBBdsdB"));
+console.log(countBs("BfB"));
+console.log(countBs("BBBBBB"));
+
+console.log(countChar("","x"));
+console.log(countChar("x","x"));
+console.log(countChar("y","x"));
+console.log(countChar("32dsxsasXxx","x"));
+
+console.log(countBs("BBC"));
+console.log(countChar("kakkerlak", "k"));
+</script>
