@@ -1,0 +1,37 @@
+<script>
+function reverseArray(xs) {
+	var ys = [], count = 0;
+	for (var count = 0; count < xs.length; count++)
+		ys.unshift(xs[count]);
+	return ys;
+}
+console.log(reverseArray([]));
+console.log(reverseArray([1]));
+console.log(reverseArray([1,2,3,4]));
+console.log(reverseArray([1,2,3,4,5]));
+
+var zs = [7,8,9,10];
+console.log(reverseArray(zs));
+console.log(zs);				// zs is the same
+
+function reverseArrayInPlace(xs) {
+	if (xs.length <= 1)
+		return xs;
+	else {
+		var newFirst = xs.pop();
+		var newLast  = xs.shift();
+		reverseArrayInPlace(xs);
+		xs.unshift(newFirst);
+		xs.push(newLast);
+		return xs;
+	}
+}
+console.log(reverseArrayInPlace([]));
+console.log(reverseArrayInPlace([1]));
+console.log(reverseArrayInPlace([1,2,3,4]));
+console.log(reverseArrayInPlace([1,2,3,4,5]));
+
+var zs = [7,8,9,10];
+console.log(reverseArrayInPlace(zs));
+console.log(zs);				// zs changed
+</script>
