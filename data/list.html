@@ -1,0 +1,87 @@
+<script>
+// var list = {
+//   value: 1,
+//   rest: {
+//     value: 2,
+//     rest: {
+//       value: 3,
+//       rest: null
+//     }
+//   }
+// };
+
+function arrayToList(array) {
+	function go(array,i) {
+		if (array.length == 0)
+			return null;
+		else {
+			var list = {};
+			list["value"] = array[0];
+			list["rest"]  = go(array.slice(1));
+			return list;
+		}
+	}
+	return go(array);
+}
+console.log(arrayToList([]));
+console.log(arrayToList([1]));
+console.log(arrayToList([1,2,3]));
+
+var foo = [1,2,3];
+console.log(arrayToList(foo));
+console.log(foo);
+
+function listToArray(list) {
+	var array = [];
+	for (var node = list; node; node = node.rest)
+		array.push(node.value);
+	return array;
+}
+console.log(listToArray({}));
+console.log(listToArray({"value": 1, "rest": null}));
+console.log(listToArray({ "value": 1,
+						  "rest": { "value": 2,
+									"rest": null } }));
+console.log(listToArray({ "value": 1,
+						  "rest": { "value": 2,
+									"rest": { "value": 3,
+											  "rest": null } } }));
+
+function prepend(elem, list) {
+	var res = {};
+    res.value = elem;
+	res.rest  = list;
+	return res;
+}
+console.log(prepend(42, arrayToList(foo)));
+
+function nth(list, n) {
+	var res = undefined;
+	var nAbs = Math.abs(n);
+	for (var node = list, i = 0; node; node = node.rest, i++)
+		if (i == nAbs)
+			res = node.value;
+	return res;
+}
+var bar = arrayToList(foo);
+console.log(nth({}, 42));
+console.log(nth(bar, 42));
+console.log(nth(bar, 0));
+console.log(nth(bar, 2));
+
+function nthRec(list, n) {
+	function go(list, i, n) {
+		if (!list)
+			return undefined;
+		else if (i == n)
+			return list.value;
+		else
+			return go(list.rest, i+1, n);
+	}
+	return go(list, 0, Math.abs(n));
+}
+console.log(nthRec({}, 42));
+console.log(nthRec(bar, 42));
+console.log(nthRec(bar, 0));
+console.log(nthRec(bar, 2));
+</script>
