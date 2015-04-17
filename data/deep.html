@@ -1,0 +1,88 @@
+<script>
+function deepEqual(xs, ys) {
+	console.log("---------------------------");
+	function go(xs, ys) {
+		console.log("xs: ", xs, "; ys:", ys);
+		if (typeof(xs) == "object" && typeof(ys) == "object" &&
+			xs !== null && ys !== null) {
+			console.log("if called");
+
+			var xsKeys = [];
+			var ysKeys = [];
+			for (x in xs)
+				xsKeys.push(x);
+			for (y in ys)
+				ysKeys.push(y);
+
+			if (xsKeys.length !== ysKeys.length)
+				return false;
+			else {
+				var res = true;
+				for (var i = 0; i < xsKeys.length; i++)
+					res = (res &&
+					       xsKeys[i] === ysKeys[i] &&
+						   go(xs[xsKeys[i]], ys[ysKeys[i]]));
+				return res;
+			}
+		}
+		else {
+			console.log("else called");
+
+			return xs === ys;
+		}
+	}
+
+	return go(xs, ys);
+}
+// From the book:
+var obj = {here: {is: "an"}, object: 2};
+console.log(deepEqual(obj, obj));
+console.log(deepEqual(obj, {here: 1, object: 2}));
+console.log(deepEqual(obj, {here: {is: "an"}, object: 2}));
+
+console.log(deepEqual(3, 3));
+console.log(deepEqual(3, 4));
+
+console.log(deepEqual(Infinity, Infinity));
+console.log(deepEqual(-Infinity, Infinity));
+console.log(deepEqual(NaN, NaN));
+console.log(deepEqual(NaN, Infinity));
+console.log(deepEqual(NaN, 3));
+
+console.log(deepEqual(true, true));
+console.log(deepEqual(true, false));
+
+console.log(deepEqual("foo", "foo"));
+console.log(deepEqual("foo", "bar"));
+
+console.log(deepEqual(null, null));
+console.log(deepEqual(null, undefined));
+console.log(deepEqual(undefined, undefined));
+
+console.log(deepEqual([], []));
+console.log(deepEqual([], ["foo"]));
+console.log(deepEqual(["foo"], ["foo"]));
+console.log(deepEqual(["foo"], ["bar"]));
+
+console.log(deepEqual(["foo","bar","baz"], ["foo","bar","baz"]));
+console.log(deepEqual(["foo","bar","baz"], ["foo","bar"]));
+
+console.log(deepEqual({}, {}));
+console.log(deepEqual({}, {foo: 2}));
+console.log(deepEqual({foo: 2}, {foo: 2}));
+console.log(deepEqual({foo: 2}, {bar: 2}));
+console.log(deepEqual({foo: 2}, {foo: 3}));
+
+console.log(deepEqual({foo: {bar: 2, baz: 3}}, {foo: 2}));
+console.log(deepEqual({foo: {bar: 2, baz: 3}}, {foo: {bar: 2, baz: 3}}));
+
+console.log(deepEqual({foo: {bar: 2, baz: 3}}, {foo: {bar: 2, baz: 42}}));
+
+console.log(deepEqual({foo: {bar: 2, baz: ["foo", "bar"]}}, {foo: {bar: 2, baz: ["foo", "bar"]}}));
+console.log(deepEqual({foo: {bar: 2, baz: ["foo", "bar"]}}, {foo: {bar: 2, baz: ["foo", "baz"]}}));
+
+console.log(deepEqual({foo: {bar: 2, baz: ["foo", {qux: 42}]}}, {foo: {bar: 2, baz: ["foo", {qux: 42}]}}));
+console.log(deepEqual({foo: {bar: 2, baz: ["foo", {qux: 42}]}}, {foo: {bar: 2, baz: ["foo", {qux: 90}]}}));
+
+console.log(deepEqual({foo: {bar: 2, baz: ["foo", {qux: 42}]}}, {bar: {foo: 2, baz: ["foo", {qux: 42}]}}));
+</script>
