@@ -1,0 +1,34 @@
+<script>
+function every(xs, p) {
+	var res = true;
+	for (var i = 0; i < xs.length; i++) {
+		// console.log(xs[i]);
+		if (p(xs[i]) === false)
+			return false;
+	}
+	return res;
+}
+
+function some(xs, p) {
+	var res = false;
+	for (var i = 0; i < xs.length; i++) {
+		// console.log(xs[i]);
+		if (p(xs[i]))
+			return true;
+	}
+	return res;
+}
+
+function test(f) {
+	console.log(f([], isNaN));
+	console.log(f([1, 2, 3], isNaN));
+	console.log(f([NaN, 2, 3], isNaN));
+	console.log(f([1, NaN, 3], isNaN));
+	console.log(f([NaN, NaN, 3], isNaN));
+	console.log(f([NaN, NaN, NaN], isNaN));
+	console.log("----");
+}
+
+test(every);
+test(some);
+</script>
