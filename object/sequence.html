@@ -1,0 +1,41 @@
+<script>
+function Sequence(start, f) {
+    this.current = start;
+    this.elem = f;
+}
+
+function ArraySeq(array) {
+    return new Sequence(0, function() {
+        var cur = this.current;
+        this.current = cur+1;
+        return array[cur];
+    })
+}
+
+function RangeSeq(start, end) {
+    return new Sequence(start, function() {
+        var cur = this.current
+        this.current = cur+1;
+        if (cur > end)
+            return undefined;
+        else
+            return cur;
+    })
+}
+
+function logFive(seq) {
+    var eos = false;
+    for(i = 0; i < 5 && !eos; i++) {
+        var current = seq.elem();
+        if (current === undefined)
+            var eos = true;
+        else
+            console.log("current: " + current);
+    }
+}
+
+logFive(new ArraySeq([1, 2, 3]));
+logFive(new RangeSeq(100, 103));
+logFive(new ArraySeq([53, 42, 99, 70, 80, 101, 999]));
+logFive(new RangeSeq(-200, 800));
+</script>
